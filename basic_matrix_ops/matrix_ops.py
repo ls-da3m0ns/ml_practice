@@ -27,7 +27,8 @@ def matrix_dot_product(A, B) :
         result.append(c)
     
     return result
-            
+
+
 def transpose_matrix(A):
     shape = matrix_shape(A)
     
@@ -78,19 +79,56 @@ def scalar_multip(A,k):
     for i in range(dims[0]):
         for j in range(dims[1]):
             A[i][j] *= k 
-    
     return A 
 
 
+def det_matrix_cofactor_method(A):
+    curr_shape = matrix_shape(A)
+    if curr_shape[0] != curr_shape[1]:
+        raise Exception("Non Square Matrix")
+    
+    if curr_shape[0] == curr_shape[1] == 2:
+        return  A[0][0] * A[1][1] - A[0][1] * A[1][0]
+    elif curr_shape[0] == curr_shape[1] == 1:
+        return A[0][0]
+     # row wise deter allways 
+    deter_row = 0
+     
+    deter = 0 
+    for deter_clm in range(curr_shape[1]):
+        curr_cofactor = (-1) ** (deter_row+1 + deter_clm+1)
+        subset_matrix = []
+        for i in range(curr_shape[0]):
+           r = []
+           for j in range(curr_shape[1]):
+               if i != deter_row and j != deter_clm:
+                   r.append(A[i][j])
+
+           if len(r) > 0: subset_matrix.append(r)
+           
+        
+        deter += curr_cofactor * A[deter_row][deter_clm] * det_matrix(subset_matrix)
+    
+    return deter
+            
+         
+from numpy.linalg import det 
+import numpy as np 
+
 if __name__ == '__main__':
-    A = generate_random_matrix((4,5))
+    A = generate_random_matrix((5,5))
     B = generate_random_matrix((5,4))
     
     print(
         A,
         '\n',
-        mean(
-            A,
-            1
+        det_matrix_cofactor_method(
+            A
+        )
+    )
+    
+    print(
+        det(
+            np.array(A)
         )
     )
