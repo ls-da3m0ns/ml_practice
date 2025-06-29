@@ -127,6 +127,26 @@ def descriptive_stats(series):
         "IQR" : IQR
     } 
 
+def covariance_matrix(series_x, series_y):
+    """
+    Computes Covariance Matrix for given two series x,y
+    [
+        var(x), cov(x,y)
+        cov(y,x), var(y)
+    ]
+
+    """
+    descriptive_stats_x = descriptive_stats(series_x)
+    descriptive_stats_y = descriptive_stats(series_y)
+
+    cov_xy = sum( 
+        map( lambda x: (x[0] - descriptive_stats_x['mean']) * (x[1] - descriptive_stats_y['mean']), 
+            zip(series_x, series_y)) ) / (len(series_x) -1)
+      
+    return [
+        [descriptive_stats_x['variance'], cov_xy],
+        [cov_xy, descriptive_stats_y['variance']]
+    ]
 
 if __name__ == '__main__':
     num_events = 3 
