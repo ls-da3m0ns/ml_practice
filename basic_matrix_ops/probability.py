@@ -136,6 +136,8 @@ def covariance_matrix(series_x, series_y):
     ]
 
     """
+    assert len(series_x) == len(series_y), "Length mis-match"
+    
     descriptive_stats_x = descriptive_stats(series_x)
     descriptive_stats_y = descriptive_stats(series_y)
 
