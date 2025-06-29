@@ -155,7 +155,7 @@ if __name__ == '__main__':
     lamb = 5 
 
     print(
-        "Poission Prob",
+        "Poisson Prob",
         poisson_prob(5,3)
     )
 
