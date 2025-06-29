@@ -107,7 +107,7 @@ def det_matrix_cofactor_method(A):
            if len(r) > 0: subset_matrix.append(r)
            
         
-        deter += curr_cofactor * A[deter_row][deter_clm] * det_matrix(subset_matrix)
+        deter += curr_cofactor * A[deter_row][deter_clm] * det_matrix_cofactor_method(subset_matrix)
     
     return deter
             
